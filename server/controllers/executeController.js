@@ -5,28 +5,28 @@ const path = require("path");
 const EXECUTION_CONFIG = {
   javascript: {
     fileName: "code.js",
-    command: "node:18 node code.js",
+    command: 'node:18 sh -c "node code.js < input.txt"',
   },
   python: {
     fileName: "code.py",
-    command: "python:3.11 python code.py",
+    command: 'python:3.11 sh -c "python code.py < input.txt"',
   },
   c: {
     fileName: "code.c",
-    command: 'gcc:13 sh -c "gcc code.c -O2 -o code.out && ./code.out"',
+    command: 'gcc:13 sh -c "gcc code.c -O2 -o code.out && ./code.out < input.txt"',
   },
   cpp: {
     fileName: "code.cpp",
-    command: 'gcc:13 sh -c "g++ code.cpp -std=c++17 -O2 -o code.out && ./code.out"',
+    command: 'gcc:13 sh -c "g++ code.cpp -std=c++17 -O2 -o code.out && ./code.out < input.txt"',
   },
   java: {
     fileName: "Main.java",
-    command: 'eclipse-temurin:17 sh -c "javac Main.java && java Main"',
+    command: 'eclipse-temurin:17 sh -c "javac Main.java && java Main < input.txt"',
   },
 };
 
 const executeCode = (req, res) => {
-  const { code, language = "javascript" } = req.body;
+  const { code, language = "javascript", input = "" } = req.body;
   const selectedLanguage = String(language).toLowerCase();
   const runner = EXECUTION_CONFIG[selectedLanguage];
 
@@ -41,22 +41,22 @@ const executeCode = (req, res) => {
 
   // write code to file
   fs.writeFileSync(filePath, code);
+  fs.writeFileSync(
+    path.join(dockerPath, "input.txt"),
+    input
+  );
 
   const command = `docker run --rm -v "${dockerPath}:/workspace" -w /workspace ${runner.command}`;
 
-  exec(command, { timeout: 300000 }, (err, stdout, stderr) => {
-    if (err) {
-      if (err.killed && err.signal === "SIGTERM") {
-        return res.json({
-          output:
-            "Execution timed out while Docker image was downloading or code was running. Please run again after images finish pulling.",
-        });
-      }
+  exec(command, { timeout: 5000 }, (err, stdout, stderr) => {
+    console.log("STDOUT =", JSON.stringify(stdout));
+    console.log("STDERR =", JSON.stringify(stderr));
 
-      return res.json({ output: stderr || err.message });
+    if (err) {
+      console.log("ERROR =", err);
     }
 
-    return res.json({ output: stdout });
+    res.json({ output: stdout || stderr });
   });
 };
 

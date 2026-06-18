@@ -19,6 +19,7 @@ const Room = () => {
   const [code, setCode] = useState("// start coding...");
   const [language, setLanguage] = useState("javascript");
   const [output, setOutput] = useState("");
+  const [input, setInput] = useState("");
 
   useEffect(() => {
     if (!roomId) return;
@@ -80,14 +81,19 @@ const Room = () => {
 
   const runCode = async () => {
     try {
-      setOutput("Running..."); // immediate UI update
+      const token = localStorage.getItem("token");
 
       const res = await fetch("http://localhost:5000/api/execute", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ code, language }),
+        body: JSON.stringify({
+          code,
+          language,
+          input,
+        }),
       });
 
       const data = await res.json();
@@ -120,6 +126,23 @@ const Room = () => {
       setCode={setCode}
       language={language}
     />
+
+    <div style={{ marginTop: "10px" }}>
+      <h4>Custom Input</h4>
+
+      <textarea
+        rows={5}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Enter custom input..."
+        style={{
+          width: "100%",
+          padding: "10px",
+          fontFamily: "monospace",
+        }}
+      />
+    </div>
+
     <button onClick={runCode}>Run Code</button>
     <OutputPanel output={output} />
 
