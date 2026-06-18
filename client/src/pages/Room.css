@@ -1,0 +1,278 @@
+* {
+  box-sizing: border-box;
+}
+
+.room-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #312e81);
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.background-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+}
+
+.circle1 {
+  width: 350px;
+  height: 350px;
+  background: rgba(59, 130, 246, 0.25);
+  top: -100px;
+  left: -100px;
+}
+
+.circle2 {
+  width: 350px;
+  height: 350px;
+  background: rgba(168, 85, 247, 0.25);
+  bottom: -100px;
+  right: -100px;
+}
+
+.room-container {
+  position: relative;
+  z-index: 1;
+}
+
+.room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 20px;
+  margin-bottom: 20px;
+
+  border-radius: 20px;
+
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.08);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.room-title {
+  color: white;
+}
+
+.language-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+.language-section select {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.language-section option {
+  color: black;
+}
+
+.room-main {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  gap: 20px;
+}
+
+.editor-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.editor-wrapper {
+  border-radius: 15px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.input-section {
+  padding: 15px;
+  border-radius: 15px;
+
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.input-section h4 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.custom-input {
+  width: 100%;
+  padding: 12px;
+
+  border-radius: 10px;
+  border: none;
+
+  resize: vertical;
+  min-height: 120px;
+
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+
+.custom-input::placeholder {
+  color: #94a3b8;
+}
+
+.run-btn {
+  padding: 14px;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  color: white;
+
+  background: linear-gradient(
+    90deg,
+    #2563eb,
+    #7c3aed
+  );
+
+  transition: 0.3s;
+}
+
+.run-btn:hover {
+  transform: translateY(-2px);
+}
+
+.output-wrapper {
+  padding: 15px;
+  border-radius: 15px;
+
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.chat-column {
+  display: flex;
+  flex-direction: column;
+
+  padding: 15px;
+
+  border-radius: 20px;
+
+  backdrop-filter: blur(15px);
+  background: rgba(255,255,255,0.08);
+
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.chat-column h3 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+.chat-box {
+  flex: 1;
+
+  min-height: 650px;
+  max-height: 650px;
+
+  overflow-y: auto;
+
+  padding: 10px;
+
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+}
+
+.message-row {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.message-row.me {
+  justify-content: flex-end;
+}
+
+.message-row.other {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  max-width: 80%;
+
+  padding: 10px 14px;
+  border-radius: 15px;
+
+  word-wrap: break-word;
+}
+
+.my-message {
+  background: #2563eb;
+  color: white;
+}
+
+.other-message {
+  background: rgba(255,255,255,0.15);
+  color: white;
+}
+
+.chat-input-area {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.chat-input-area input {
+  flex: 1;
+
+  padding: 12px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+
+.chat-input-area button {
+  padding: 12px 18px;
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+  color: white;
+
+  background: linear-gradient(
+    90deg,
+    #10b981,
+    #059669
+  );
+}
+
+@media (max-width: 1000px) {
+  .room-main {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-box {
+    min-height: 300px;
+    max-height: 300px;
+  }
+
+  .room-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

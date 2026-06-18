@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import socket from "../socket";
 import CodeEditor from "../components/CodeEditor";
 import OutputPanel from "../components/OutputPanel";
+import "./Room.css";
 
 const SUPPORTED_LANGUAGES = [
   { value: "javascript", label: "JavaScript" },
@@ -106,91 +107,100 @@ const Room = () => {
   };
 
   return (
-  <div>
-    <h2>Room: {roomId}</h2>
+    <div className="room-page">
+      <div className="background-circle circle1"></div>
+      <div className="background-circle circle2"></div>
 
-    <div style={{ marginBottom: "10px" }}>
-      <label htmlFor="language" style={{ marginRight: "8px" }}>Language:</label>
-      <select id="language" value={language} onChange={handleLanguageChange}>
-        {SUPPORTED_LANGUAGES.map((item) => (
-          <option key={item.value} value={item.value}>
-            {item.label}
-          </option>
-        ))}
-      </select>
-    </div>
+      <div className="room-container">
+        <div className="room-header">
+          <h2 className="room-title">Room: {roomId}</h2>
 
-    <CodeEditor
-      roomId={roomId}
-      code={code}
-      setCode={setCode}
-      language={language}
-    />
+          <div className="language-section">
+            <label htmlFor="language">Language:</label>
 
-    <div style={{ marginTop: "10px" }}>
-      <h4>Custom Input</h4>
-
-      <textarea
-        rows={5}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Enter custom input..."
-        style={{
-          width: "100%",
-          padding: "10px",
-          fontFamily: "monospace",
-        }}
-      />
-    </div>
-
-    <button onClick={runCode}>Run Code</button>
-    <OutputPanel output={output} />
-
-    {/* 🔥 Chat Input */}
-    <div style={{ marginTop: "20px" }}>
-      <input
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type message..."
-        style={{
-          padding: "10px",
-          width: "300px",
-          marginRight: "10px",
-        }}
-      />
-
-      <button onClick={sendMessage}>Send</button>
-    </div>
-
-    {/* 🔥 Chat Messages */}
-    <div style={{ marginTop: "20px" }}>
-      {messages.map((m, i) => {
-        const isMe = m.sender === socket.id;
-
-        return (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                justifyContent: isMe ? "flex-end" : "flex-start",
-                marginBottom: "10px",
-              }}
+            <select
+              id="language"
+              value={language}
+              onChange={handleLanguageChange}
             >
-              <div
-                style={{
-                  backgroundColor: isMe ? "#4CAF50" : "#e5e5ea",
-                  color: isMe ? "white" : "black",
-                  padding: "10px 15px",
-                  borderRadius: "15px",
-                  maxWidth: "250px",
-                  wordBreak: "break-word",
-                }}
-              >
-                {m.message}
-              </div>
+              {SUPPORTED_LANGUAGES.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="room-main">
+          {/* LEFT SIDE */}
+          <div className="editor-column">
+            <div className="editor-wrapper">
+              <CodeEditor
+                roomId={roomId}
+                code={code}
+                setCode={setCode}
+                language={language}
+              />
             </div>
-          );
-        })}
+
+            <div className="input-section">
+              <h4>Custom Input</h4>
+
+              <textarea
+                rows={5}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Enter custom input..."
+                className="custom-input"
+              />
+            </div>
+
+            <button className="run-btn" onClick={runCode}>
+              Run Code
+            </button>
+
+            <div className="output-wrapper">
+              <OutputPanel output={output} />
+            </div>
+          </div>
+
+          {/* RIGHT SIDE */}
+          <div className="chat-column">
+            <h3>Room Chat</h3>
+
+            <div className="chat-box">
+              {messages.map((m, i) => {
+                const isMe = m.sender === socket.id;
+
+                return (
+                  <div
+                    key={i}
+                    className={`message-row ${isMe ? "me" : "other"}`}
+                  >
+                    <div
+                      className={`message-bubble ${
+                        isMe ? "my-message" : "other-message"
+                      }`}
+                    >
+                      {m.message}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="chat-input-area">
+              <input
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Type message..."
+              />
+
+              <button onClick={sendMessage}>Send</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

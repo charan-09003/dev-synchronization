@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.dashboard-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #312e81);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.background-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+}
+
+.circle1 {
+  width: 350px;
+  height: 350px;
+  background: rgba(59, 130, 246, 0.35);
+  top: -100px;
+  left: -100px;
+}
+
+.circle2 {
+  width: 350px;
+  height: 350px;
+  background: rgba(168, 85, 247, 0.35);
+  bottom: -100px;
+  right: -100px;
+}
+
+.dashboard-container {
+  width: 500px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  text-align: center;
+  z-index: 1;
+}
+
+.dashboard-container h1 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.dashboard-subtitle {
+  color: #cbd5e1;
+  margin-bottom: 30px;
+}
+
+.action-section {
+  margin-bottom: 25px;
+}
+
+.create-btn,
+.join-btn,
+.logout-btn {
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.create-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+}
+
+.create-btn:hover {
+  transform: translateY(-2px);
+}
+
+.join-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.join-section input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: white;
+  outline: none;
+}
+
+.join-section input::placeholder {
+  color: #94a3b8;
+}
+
+.join-section input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 12px rgba(96,165,250,0.4);
+}
+
+.join-btn {
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.join-btn:hover {
+  transform: translateY(-2px);
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .dashboard-container {
+    width: 90%;
+    padding: 30px;
+  }
+
+  .join-section {
+    flex-direction: column;
+  }
+
+  .join-btn {
+    width: 100%;
+  }
+}

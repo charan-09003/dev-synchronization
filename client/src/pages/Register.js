@@ -1,6 +1,7 @@
 import { useState } from "react";
 import API from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import "./Login.css";
 
 const Register = () => {
   const [form, setForm] = useState({
@@ -23,24 +24,57 @@ const Register = () => {
       alert("Registered successfully");
       navigate("/");
     } catch (err) {
-        console.log("FULL ERROR:", err); 
-        console.log("BACKEND ERROR:", err.response?.data);
+      console.log("FULL ERROR:", err);
+      console.log("BACKEND ERROR:", err.response?.data);
 
-        alert(err.response?.data?.message || "Error registering");
-      }
+      alert(err.response?.data?.message || "Error registering");
+    }
   };
 
   return (
-    <div>
-      <h2>Register</h2>
+    <div className="login-page">
+      <div className="background-circle circle1"></div>
+      <div className="background-circle circle2"></div>
 
-      <form onSubmit={handleSubmit}>
-        <input name="username" placeholder="Username" onChange={handleChange} />
-        <input name="email" placeholder="Email" onChange={handleChange} />
-        <input name="password" type="password" placeholder="Password" onChange={handleChange} />
+      <div className="login-container">
+        <h2>Create Account</h2>
+        <p className="subtitle">Join us and start your journey</p>
 
-        <button type="submit">Register</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <input
+              name="username"
+              placeholder="Username"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="input-group">
+            <input
+              name="email"
+              type="email"
+              placeholder="Email Address"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="input-group">
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={handleChange}
+            />
+          </div>
+
+          <button type="submit">Register</button>
+        </form>
+
+        <p className="register-text">
+          Already have an account?{" "}
+          <Link to="/">Login</Link>
+        </p>
+      </div>
     </div>
   );
 };

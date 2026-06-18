@@ -1,6 +1,7 @@
 import { useState } from "react";
 import API from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
+import "./Login.css";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -29,19 +30,40 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="login-page">
+      <div className="background-circle circle1"></div>
+      <div className="background-circle circle2"></div>
 
-      <form onSubmit={handleSubmit}>
-        <input name="email" placeholder="Email" onChange={handleChange} />
-        <input name="password" type="password" placeholder="Password" onChange={handleChange} />
+      <div className="login-container">
+        <h2>Welcome Back</h2>
+        <p className="subtitle">Login to continue</p>
 
-        <button type="submit">Login</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <input
+              name="email"
+              type="email"
+              placeholder="Email Address"
+              onChange={handleChange}
+            />
+          </div>
 
-      <p>
-        No account? <Link to="/register">Register</Link>
-      </p>
+          <div className="input-group">
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={handleChange}
+            />
+          </div>
+
+          <button type="submit">Login</button>
+        </form>
+
+        <p className="register-text">
+          No account? <Link to="/register">Register</Link>
+        </p>
+      </div>
     </div>
   );
 };
